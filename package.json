@@ -1,0 +1,66 @@
+{
+  "name": "@anonymiser/core",
+  "version": "0.1.0",
+  "description": "Zero-dependency, framework-agnostic engine for document classification, security marking, verified redaction, and tamper-evident provenance.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./detect": {
+      "types": "./dist/detect/index.d.ts",
+      "default": "./dist/detect/index.js"
+    },
+    "./classify": {
+      "types": "./dist/classify/index.d.ts",
+      "default": "./dist/classify/index.js"
+    },
+    "./redact": {
+      "types": "./dist/redact/index.d.ts",
+      "default": "./dist/redact/index.js"
+    },
+    "./adapters/text": {
+      "types": "./dist/adapters/text/index.d.ts",
+      "default": "./dist/adapters/text/index.js"
+    },
+    "./adapters/image": {
+      "types": "./dist/adapters/image/index.d.ts",
+      "default": "./dist/adapters/image/index.js"
+    },
+    "./adapters/pdf": {
+      "types": "./dist/adapters/pdf/index.d.ts",
+      "default": "./dist/adapters/pdf/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test \"dist-test/test/*.test.js\"",
+    "clean": "rm -rf dist dist-test"
+  },
+  "keywords": [
+    "redaction",
+    "classification",
+    "pii",
+    "security-marking",
+    "capco",
+    "foia",
+    "privacy",
+    "zero-dependency"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "typescript": "^5.9.3"
+  }
+}
