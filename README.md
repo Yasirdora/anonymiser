@@ -222,6 +222,10 @@ npm run typecheck
 
 The suite covers FIPS 180-4 and RFC 4231 vectors, DEFLATE round-trips against Node's zlib, lattice algebra (commutativity, associativity, idempotence, identity), marking round-trips, checksum validators, offset-correct text rewriting, the safety refusals, manifest tamper detection, hand-built PNG/JPEG/PDF fixtures, a PDF with a fake redaction and one with a superseded revision, an adapter deliberately written to leak — and a real breach complaint asserted value by value, which is where several of these rules came from.
 
+## Legal Disclaimer
+
+This software is provided "as is", without warranty of any kind, express or implied. While the engine is designed to securely and permanently remove information, document security and compliance are ultimately the responsibility of the user. The authors and contributors assume no liability for data leaks, accidental disclosures, legal damages, or consequences resulting from the use of this tool. Always verify your releases.
+
 ## License
 
 Apache-2.0
