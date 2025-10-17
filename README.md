@@ -205,6 +205,14 @@ interface DocumentAdapter<TSource, TOutput> {
 
 ---
 
+## Playground
+
+You can try out the engine live in the browser without installing anything. It includes sample documents, five classification policies, every redaction strategy, live verification, and manifest inspection.
+
+👉 **[Try the Anonymiser Playground](https://ysrdora.github.io/anonymiser.app)**
+
+---
+
 ## Testing
 
 ```bash
