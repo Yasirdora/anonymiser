@@ -188,7 +188,6 @@ interface DocumentAdapter<TSource, TOutput> {
 - **Name detection is heuristic.** Names are found by their *frame* — an honorific, a role label, a signature block — not their content. That is precise where it fires and silent where it does not. For work where a missed name is unacceptable, add a named-entity recogniser as an extra `Detector`; the engine is built to compose them.
 - **The PDF adapter does not read scans.** There is no OCR, so a scanned page is reported as having no extractable text rather than as clean. It also does not re-encode images, subset fonts, or handle encrypted files — an encrypted PDF is refused rather than half-processed. Text boxes come from an average glyph width rather than font metrics, so a burned bar is deliberately slightly generous.
 - **Office adapters are not in this release.** DOCX and XLSX are next; revision history and comments are the primary leak channels there.
-- **Name detection will miss names.** It matches the frame — an honorific, a role label, a signature block — not the content.
 - **The classification packs are working models, not authoritative copies.** Marking vocabularies change, several compartments are themselves classified, and every adopting organisation adds local values. Unrecognised segments surface as `unparsed-marking` warnings rather than being silently dropped. Have whoever owns marking policy review the pack before it is deployed.
 - **The CAPCO pack stops at CUI.** Whether information is national security information under EO 13526 is an original classification decision reserved to a human with the authority to make it. No pattern match substitutes for that. What the engine does derive is the CUI categories that follow mechanically from privacy, health, or law-enforcement content.
 - **`deriveKey` is iterated SHA-256, not memory-hard.** A zero-dependency core cannot provide Argon2. It is appropriate for a carefully chosen project passphrase and not for a user-chosen password. Where the platform offers PBKDF2 or Argon2, use that and pass the bytes in.
@@ -205,18 +204,6 @@ interface DocumentAdapter<TSource, TOutput> {
 - The SHA-256 implementation is not constant-time against a local attacker measuring cache behaviour. That is out of scope: the engine hashes content the caller already holds in plaintext.
 
 ---
-
-## Playground
-
-From the repository root:
-
-```bash
-npm run dev     # http://localhost:5173
-```
-
-A static page that imports the built ESM directly — no bundler, no framework.
-Five sample documents, five policies, every redaction strategy, live verification
-and manifest inspection.
 
 ## Testing
 
