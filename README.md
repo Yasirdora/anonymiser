@@ -1,5 +1,11 @@
 # @anonymiser/core
 
+**Tags:** `redaction`, `security`, `classification`, `compliance`, `pdf`, `images`
+
+A professional, zero-dependency engine for cryptographically secure document redaction and tamper-evident provenance. 
+
+🌐 **Try the Live Studio App:** [ysrdora.github.io/anonymiser.app](http://ysrdora.github.io/anonymiser.app)
+
 A zero-dependency, framework-agnostic engine for **classifying documents, deriving security markings, redacting sensitive content, proving the redaction worked, and recording what was done.**
 
 Runs unchanged in a browser, a service worker, Node, Deno, and Bun. No DOM, no Node built-ins, no dependencies — not "few dependencies", none.
@@ -38,6 +44,9 @@ assertStrategyPermitted('blur');
 ```
 
 You can override it. You cannot override it silently: the manifest records the choice and the result is flagged as not defensible.
+
+**The Solution: Synthetic Mosaic**
+To provide the visual affordance of pixelation without the mathematical vulnerability, the engine implements a `synthetic-mosaic` strategy. Instead of averaging underlying pixel values (which leaks data), it generates a deterministic, cryptographically-seeded noise block over the region. The original pixels are unconditionally destroyed, yielding the aesthetic of a classic mosaic with mathematically guaranteed zero-reversibility.
 
 ### 2. Redaction is not finished until it is verified
 
