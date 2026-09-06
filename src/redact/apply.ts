@@ -299,16 +299,43 @@ export function syntheticPixelateRegion(
     for (let blockX = x0; blockX < x1; blockX += size) {
       const blockRight = Math.min(blockX + size, x1);
 
-      // We use shades of grey for authenticity to black-and-white documents
-      const intensity = Math.floor(next() * 256);
+      let r = 0, g = 0, b = 0, a = 0, count = 0;
+      for (let y = blockY; y < blockBottom; y++) {
+        let index = (y * imageWidth + blockX) * 4;
+        for (let x = blockX; x < blockRight; x++) {
+          r += pixels[index]!;
+          g += pixels[index + 1]!;
+          b += pixels[index + 2]!;
+          a += pixels[index + 3]!;
+          count++;
+          index += 4;
+        }
+      }
+      if (count === 0) continue;
+
+      // Calculate the true averages (what standard pixelation does)
+      const trueAvgR = Math.round(r / count);
+      const trueAvgG = Math.round(g / count);
+      const trueAvgB = Math.round(b / count);
+      const trueAvgA = Math.round(a / count);
+
+      // Add a cryptographically seeded "poison" offset to each channel to destroy mathematical reversibility
+      // The offset is between -30 and +30 to preserve the overall skin tone and look
+      const poisonR = Math.floor(next() * 60) - 30;
+      const poisonG = Math.floor(next() * 60) - 30;
+      const poisonB = Math.floor(next() * 60) - 30;
+
+      const finalR = Math.max(0, Math.min(255, trueAvgR + poisonR));
+      const finalG = Math.max(0, Math.min(255, trueAvgG + poisonG));
+      const finalB = Math.max(0, Math.min(255, trueAvgB + poisonB));
 
       for (let y = blockY; y < blockBottom; y++) {
         let index = (y * imageWidth + blockX) * 4;
         for (let x = blockX; x < blockRight; x++) {
-          pixels[index] = intensity;
-          pixels[index + 1] = intensity;
-          pixels[index + 2] = intensity;
-          pixels[index + 3] = 255;
+          pixels[index] = finalR;
+          pixels[index + 1] = finalG;
+          pixels[index + 2] = finalB;
+          pixels[index + 3] = trueAvgA;
           index += 4;
         }
       }
