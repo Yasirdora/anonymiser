@@ -1,8 +1,5 @@
 # @anonymiser/core
 
-
-🌐 **Try the Live Studio App:** [ysrdora.github.io/anonymiser.app](http://ysrdora.github.io/anonymiser.app)
-
 A zero-dependency, framework-agnostic engine for **classifying documents, deriving security markings, redacting sensitive content, proving the redaction worked, and recording what was done.**
 
 Runs unchanged in a browser, a service worker, Node, Deno, and Bun. No DOM, no Node built-ins, no dependencies — not "few dependencies", none.
