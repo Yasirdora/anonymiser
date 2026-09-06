@@ -617,7 +617,7 @@ describe('a forwarded clinical incident report', () => {
     ['HIV', 'health.condition'],
     ['dXNlcjphZG1pbiBw', 'secret.password'],
     ['ghp_16C7e42F', 'secret.api-key'],
-    ['sk_live_51Mabcx', 'secret.api-key'],
+    ['sk_test_51Mabcx82e4EXAMPLE990021384729103847209', 'secret.api-key'],
     ['AIzaSyB', 'secret.api-key'],
     ['BEGIN RSA PRIVATE KEY', 'secret.private-key'],
     ['10.192.44.5', 'net.ipv4'],

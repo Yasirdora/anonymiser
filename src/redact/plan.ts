@@ -497,6 +497,7 @@ function resolveReplacement(
     case 'pixelate':
     case 'scramble':
     case 'hatch':
+    case 'synthetic-mosaic':
       return {};
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@anonymiser/core",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "Zero-dependency, framework-agnostic engine for document classification, security marking, verified redaction, and tamper-evident provenance.",
   "license": "Apache-2.0",
   "type": "module",

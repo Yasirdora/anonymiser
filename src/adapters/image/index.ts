@@ -20,7 +20,7 @@ import { ClassifiedError } from '../../errors.js';
 import type { AdapterCapabilities, DocumentAdapter, ParseOptions } from '../../adapter.js';
 import type { ContentNode, DocumentModel } from '../../model/document.js';
 import { snapRectOutward, type Rect } from '../../model/geometry.js';
-import { blackoutRegion, hatchRegion, pixelateRegion, scrambleRegion } from '../../redact/apply.js';
+import { blackoutRegion, hatchRegion, pixelateRegion, scrambleRegion, syntheticPixelateRegion } from '../../redact/apply.js';
 import { assertStrategyPermitted } from '../../redact/strategies.js';
 import type { RedactionOperation } from '../../redact/plan.js';
 import { gpsToDecimal } from './exif.js';
@@ -57,7 +57,7 @@ export interface OcrBlock {
 }
 
 const CAPABILITIES: AdapterCapabilities = {
-  strategies: ['blackout', 'remove', 'pixelate', 'scramble', 'hatch'],
+  strategies: ['blackout', 'remove', 'pixelate', 'scramble', 'hatch', 'synthetic-mosaic'],
   removesMetadata: true,
   removesAttachments: false,
   removesRevisionHistory: false,
@@ -161,7 +161,7 @@ export const imageAdapter: DocumentAdapter<RasterDocument, RasterDocument> = {
       switch (operation.location.kind) {
         case 'region': {
           pixelOps = true;
-          const raster = ['blackout', 'pixelate', 'scramble', 'hatch'] as const;
+          const raster = ['blackout', 'pixelate', 'scramble', 'hatch', 'synthetic-mosaic'] as const;
           if (!(raster as readonly string[]).includes(operation.strategy)) {
             throw new ClassifiedError(
               'E_UNSUPPORTED',
@@ -179,6 +179,8 @@ export const imageAdapter: DocumentAdapter<RasterDocument, RasterDocument> = {
           const padded = snapRectOutward(inflate(operation.location.rect, REGION_PADDING));
           if (operation.strategy === 'pixelate') {
             pixelateRegion(pixels, width, height, padded, operation.blockSize ?? 16);
+          } else if (operation.strategy === 'synthetic-mosaic') {
+            syntheticPixelateRegion(pixels, width, height, padded, operation.blockSize ?? 16, operation.id);
           } else if (operation.strategy === 'scramble') {
             scrambleRegion(pixels, width, height, padded, operation.id);
           } else if (operation.strategy === 'hatch') {

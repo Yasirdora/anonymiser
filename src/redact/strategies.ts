@@ -41,7 +41,9 @@ export type RedactionStrategy =
   /** Overwrite a raster region with deterministic noise. Destructive. */
   | 'scramble'
   /** Overwrite a raster region with hazard hatching. Destructive. */
-  | 'hatch';
+  | 'hatch'
+  /** Overwrite a raster region with a mosaic of randomized blocks. Destructive. */
+  | 'synthetic-mosaic';
 
 /** How recoverable the original is from the output. */
 export type Recoverability =
@@ -158,6 +160,15 @@ const SPECS: Readonly<Record<RedactionStrategy, StrategySpec>> = {
     preservesLength: false,
     description:
       'Fills the region and draws hazard stripes into the fill. Destroys as completely as a blackout, and cannot be mistaken for a scanning artifact.',
+  },
+  'synthetic-mosaic': {
+    id: 'synthetic-mosaic',
+    destructive: true,
+    recoverability: 'none',
+    appliesTo: ['region'],
+    preservesLength: false,
+    description:
+      'Overwrites the region with a mosaic of randomized blocks derived from the operation seed. Visually resembles pixelation but mathematically destroys the original data.',
   },
 };
 

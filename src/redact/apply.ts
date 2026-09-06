@@ -273,6 +273,50 @@ export function scrambleRegion(
 }
 
 /**
+ * Overwrite a region with a synthetic block mosaic.
+ *
+ * Visually mimics pixelation but destroys data mathematically like a scramble.
+ * Instead of averaging the underlying pixels, it fills each block with a
+ * deterministic random shade derived from the operation seed.
+ */
+export function syntheticPixelateRegion(
+  pixels: Uint8ClampedArray,
+  imageWidth: number,
+  imageHeight: number,
+  region: { x: number; y: number; width: number; height: number },
+  blockSize: number,
+  seed: string,
+): void {
+  const x0 = Math.max(0, Math.floor(region.x));
+  const y0 = Math.max(0, Math.floor(region.y));
+  const x1 = Math.min(imageWidth, Math.ceil(region.x + region.width));
+  const y1 = Math.min(imageHeight, Math.ceil(region.y + region.height));
+  const size = Math.max(4, Math.floor(blockSize));
+  const next = seeded(seed);
+
+  for (let blockY = y0; blockY < y1; blockY += size) {
+    const blockBottom = Math.min(blockY + size, y1);
+    for (let blockX = x0; blockX < x1; blockX += size) {
+      const blockRight = Math.min(blockX + size, x1);
+
+      // We use shades of grey for authenticity to black-and-white documents
+      const intensity = Math.floor(next() * 256);
+
+      for (let y = blockY; y < blockBottom; y++) {
+        let index = (y * imageWidth + blockX) * 4;
+        for (let x = blockX; x < blockRight; x++) {
+          pixels[index] = intensity;
+          pixels[index + 1] = intensity;
+          pixels[index + 2] = intensity;
+          pixels[index + 3] = 255;
+          index += 4;
+        }
+      }
+    }
+  }
+}
+
+/**
  * Overwrite a region with hazard hatching.
  *
  * The region is filled solid first and the stripes are drawn into the fill, so
