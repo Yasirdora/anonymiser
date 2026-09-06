@@ -1,8 +1,5 @@
 # @anonymiser/core
 
-**Tags:** `redaction`, `security`, `classification`, `compliance`, `pdf`, `images`
-
-A professional, zero-dependency engine for cryptographically secure document redaction and tamper-evident provenance. 
 
 🌐 **Try the Live Studio App:** [ysrdora.github.io/anonymiser.app](http://ysrdora.github.io/anonymiser.app)
 
